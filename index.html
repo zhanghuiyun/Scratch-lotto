@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>刮刮奖</title>
+	<meta name="viewport" content="initial-scale=1.0, width=device-width,minimum-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body{
+			margin: 0;
+		}
+		.wrap {
+			width: 320px;
+			height: 400px;
+			background: url('thumb-6.jpg') 0 0 no-repeat;
+			background-size: cover;
+		}
+	</style>
+</head>
+<body>
+	<div id="con" class="wrap">
+		<p>+s</p>
+		<canvas id="myCanvas" width="320" height="400"></canvas>
+	</div>
+
+	<script type="text/javascript" src="jquery-2.0.3.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			//创建画布
+			var myCanvas =  document.getElementById('myCanvas');
+			var gray = myCanvas.getContext('2d');
+			//创建灰色层
+			gray.beginPath();
+			gray.fillStyle = "#999";
+			gray.fillRect(0,0,320,400);
+			gray.closePath();
+			gray.globalCompositeOperation="destination-out";
+			//画布绑定touch事件，在touchmove的时候进行画布的清除
+			myCanvas.addEventListener('touchstart', function (e) {
+				myCanvas.addEventListener('touchmove', function(e){
+					gray.beginPath();
+					gray.fillStyle = "#f00";
+					gray.arc(e.targetTouches[0].clientX, e.targetTouches[0].clientY, 20, 0, Math.PI*2);
+					gray.fill();
+					gray.closePath();
+				});
+			})
+		})
+	</script>
+</body>
+</html>
